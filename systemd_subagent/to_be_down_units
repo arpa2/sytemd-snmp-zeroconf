@@ -1,0 +1,8 @@
+# This file contains units that must not be running. 
+# Names of units can be retrieved from "systemctl list-unit-files" command. Add a unit per line such as:
+# unit1
+# unit2
+# [...]
+# umount.target
+#ureadahead-stop.timer
+#smartd.service

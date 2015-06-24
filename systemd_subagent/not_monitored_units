@@ -1,0 +1,9 @@
+# This file contains units to be discarded by the monitoring. 
+# Names of units can be retrieved from "systemctl list-unit-files" command. Add a unit per line such as:
+# unit1
+# unit2
+# [...]
+
+#systemd-tmpfiles-clean.timer 
+#ureadahead-stop.timer
+#single.service
