@@ -1,6 +1,6 @@
-##############################################
-# Monitor systemd units with Nagios via SNMP #
-##############################################
+#################################################
+# systemd units monitoring with Nagios via SNMP #
+#################################################
 
 
 # Follow Nagios Installation instructions as described here: https://assets.nagios.com/downloads/nagioscore/docs/Installing_Nagios_Core_From_Source.pdf
