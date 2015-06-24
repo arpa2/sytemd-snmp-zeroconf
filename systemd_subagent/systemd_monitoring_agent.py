@@ -233,7 +233,7 @@ def UpdateSNMPObjs():
 	if len(corrected_enabled_units_list) != 0:
                 for units in corrected_enabled_units_list:
                 	if units_at_boot_dic[units] != "enabled":
-                        	units_state_dic[units] = "inactive"
+                        	units_state_dic[units] = "unknown"
 
 
 	# Clearing the applTable to allow new data insertion
