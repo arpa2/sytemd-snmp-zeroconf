@@ -22,9 +22,7 @@ units_host2=`sudo snmpwalk -v 2c -c public -M+. $host2:$snmp_port2 NETWORK-SERVI
 # Updating the nagios file for host1
 sudo cat > $nagios_file_host1 << EOF
 define host{
-        use                     linux-server            ; Name of host template to use
-                                                        ; This host definition will inherit all variables that are defined
-                                                        ; in (or inherited by) the linux-server host template definition.
+        use                     linux-server
         host_name               $hostname1
         alias                   $hostname1
         address                 $host1
@@ -47,9 +45,7 @@ done
 # Updating the nagios file for host2
 sudo cat > $nagios_file_host2 << EOF
 define host{
-        use                     linux-server            ; Name of host template to use
-                                                        ; This host definition will inherit all variables that are defined
-                                                        ; in (or inherited by) the linux-server host template definition.
+        use                     linux-server
         host_name               $hostname2
         alias                   $hostname2
         address                 $host2
