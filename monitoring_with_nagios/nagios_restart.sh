@@ -19,7 +19,7 @@ units_host2=`sudo snmpwalk -v 2c -c public -M+. $host2:$snmp_port2 NETWORK-SERVI
 
 
 
-# Updating the nagios file from host1
+# Updating the nagios file for host1
 sudo cat > $nagios_file_host1 << EOF
 define host{
         use                     linux-server            ; Name of host template to use
