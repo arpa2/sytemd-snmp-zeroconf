@@ -1,7 +1,7 @@
 #!/bin/bash
 # This script restarts the nagios service.
 # But first of all, it creates dynamically Nagios files necessary for Nagios to monitor systemd units of monitored hosts.
-# The scripts lacks exceptions, so make sure your hosts are properly configured before running it.
+# The script lacks exceptions, so make sure your hosts are properly configured before running it.
 
 # Defining variables
 hostname1="ubuntu_RP2"
