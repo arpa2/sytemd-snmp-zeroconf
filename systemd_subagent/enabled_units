@@ -1,4 +1,4 @@
-# This file contains units to that need to be started at boot time, i.e. are enabled. 
+# This file contains units that need to be started at boot time, i.e. are enabled. 
 # Names of units can be retrieved from "systemctl list-unit-files" command. Add a unit per line such as (without #):
 # unit1
 # unit2
