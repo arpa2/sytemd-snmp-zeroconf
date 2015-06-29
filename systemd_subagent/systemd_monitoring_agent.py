@@ -164,8 +164,8 @@ def UpdateSNMPObjs():
 	# older than 2.7.
 
 
-	# retrieving all units, not counting the ones starting with "-" as they cannot be queried with systemctl commands
-	all_units_regex = subprocess.Popen("systemctl list-unit-files | head -n -2 | tail -n +2 | grep -v '^-' | awk '{print $1}'", shell=True,stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+	# retrieving service units, not counting the ones starting with "-" as they cannot be queried with systemctl commands
+	all_units_regex = subprocess.Popen("systemctl list-unit-files --type service | head -n -2 | tail -n +2 | grep -v '^-' | awk '{print $1}'", shell=True,stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 	all_units = all_units_regex.communicate()[0].splitlines()
 
 
