@@ -25,4 +25,4 @@ vi nagios_restart.sh
 ./nagios_restart.sh
 
 
-# Run the nagios_restart.sh script each time you perform a change on the files used by the agent on a monitored host (i.e. to_be_down_units, not_monitored_units, enabled_units) in order to make sure Nagios is reporting correct data. Run it at least 30 seconds after you made a change (frequency with which the agent performs updates).
+# Run the nagios_restart.sh script each time you perform a change on the not_monitored_units file in order to make sure Nagios is reporting correct data. Run it at least 30 seconds after you made a change (frequency with which the agent performs updates).
