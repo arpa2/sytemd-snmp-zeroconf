@@ -248,6 +248,8 @@ def UpdateSNMPObjs():
 			tableRow.setRowCell(6, agent.Integer32(1))
 		elif units_state_dic[units] == "unknown":
                         tableRow.setRowCell(6, agent.Integer32(3))
+                elif units_state_dic[units] != "active" and units_at_boot_dic[units] == "enabled":
+                        tableRow.setRowCell(6, agent.Integer32(6))
 		else:
 			tableRow.setRowCell(6, agent.Integer32(2))			
 			
