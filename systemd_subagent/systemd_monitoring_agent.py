@@ -164,8 +164,8 @@ def UpdateSNMPObjs():
 	# older than 2.7.
 
 
-	# retrieving service units, not counting the ones starting with "-" as they cannot be queried with systemctl commands
-	all_units_regex = subprocess.Popen("systemctl list-unit-files --type service | head -n -2 | tail -n +2 | grep -v '^-' | awk '{print $1}'", shell=True,stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+	# retrieving all units, not counting the ones starting with "-" as they cannot be queried with systemctl commands
+	all_units_regex = subprocess.Popen("systemctl list-unit-files --type service | head -n -2 | tail -n +2 | grep -v '^-' | grep -v '@'| awk '{print $1}'", shell=True,stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 	all_units = all_units_regex.communicate()[0].splitlines()
 
 
@@ -187,10 +187,10 @@ def UpdateSNMPObjs():
 	# retrieving the status of the units
 	units_state = []
 	for units in all_units:
-        	units_state_cmd = subprocess.Popen("systemctl is-active " + units, shell=True,stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        	units_state_cmd = subprocess.Popen("systemctl show " + units + " -p ActiveState" , shell=True,stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         	units_state.append(units_state_cmd.communicate()[0])
 	# removing '\n' from the state
-	units_state = [i.strip('\n') for i in units_state]	
+	units_state = [i.strip('\n') for i in units_state]
 	
 	# Creating a list that contains units that must not be running (i.e. units that are present in the to_be_down_units file)
 	# Stripping out the "\n"
@@ -207,10 +207,10 @@ def UpdateSNMPObjs():
 	# Changing the state of a unit present in the down_units_list so the monitoring system shows OK for this unit that must be down or not OK if active 
 	if len(down_units_list) != 0:	
 		for units in down_units_list:
-			if units_state_dic[units] == "inactive":
-				units_state_dic[units] = "active"
-			elif units_state_dic[units] == "active":
-                        	units_state_dic[units] = "inactive"
+			if units_state_dic[units] == "ActiveState=inactive":
+				units_state_dic[units] = "ActiveState=active"
+			elif units_state_dic[units] == "ActiveState=active":
+                        	units_state_dic[units] = "ActiveState=inactive"
 
 
 	 # retrieving information whether a unit is started at boot time
@@ -233,8 +233,7 @@ def UpdateSNMPObjs():
 	if len(corrected_enabled_units_list) != 0:
                 for units in corrected_enabled_units_list:
                 	if units_at_boot_dic[units] != "enabled":
-                        	units_state_dic[units] = "unknown"
-
+                        	units_state_dic[units] = "disabled"
 
 	# Clearing the applTable to allow new data insertion
 	applTable.clear()
@@ -244,10 +243,12 @@ def UpdateSNMPObjs():
 		index = all_units.index(units) + 1
 		tableRow = applTable.addRow([agent.Integer32(index)])
 		tableRow.setRowCell(2, agent.OctetString(str(units)))
-		if units_state_dic[units] == "active":
+		if units_state_dic[units] == "ActiveState=active":
 			tableRow.setRowCell(6, agent.Integer32(1))
-		elif units_state_dic[units] == "unknown":
+		elif units_state_dic[units] == "disabled":
                         tableRow.setRowCell(6, agent.Integer32(3))
+		elif units_state_dic[units] != "ActiveState=active" and units_at_boot_dic[units] == "enabled":
+			tableRow.setRowCell(6, agent.Integer32(6))
 		else:
 			tableRow.setRowCell(6, agent.Integer32(2))			
 			
