@@ -35,7 +35,7 @@ define service{
         use                             local-service
         host_name                       $hostname1
         service_description             $i
-        check_command                   check_snmp_systemd!public!'$i'!'=3'!'=2'
+        check_command                   check_snmp_systemd!public!'$i'!'>2'!'=2'
 }
 
 EOF
@@ -58,7 +58,7 @@ define service{
         use                             local-service
         host_name                       $hostname2
         service_description             $i
-        check_command                   check_snmp_systemd!public!'$i'!'=3'!'=2'
+        check_command                   check_snmp_systemd!public!'$i'!'>2'!'=2'
 }
 
 EOF
